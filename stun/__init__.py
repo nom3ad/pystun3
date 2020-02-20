@@ -91,24 +91,20 @@ ChangedAddressError = "Meet an error, when do Test1 on Changed IP and Port"
 def _dict_items(_dict):
     if sys.version_info >= (3,):
         return list(_dict.items())
-    else:
-        return _dict.items()
+    return _dict.items()
 
 
 def _b2a_hex(data):
     if sys.version_info >= (3,):
         return binascii.b2a_hex(data).decode()
-    else:
-        return binascii.b2a_hex(data)
+    return binascii.b2a_hex(data)
 
 
 def _initialize():
-    items = _dict_items(dictAttrToVal)
-    for i in range(len(items)):
-        dictValToAttr.update({items[i][1]: items[i][0]})
-    items = _dict_items(dictMsgTypeToVal)
-    for i in range(len(items)):
-        dictValToMsgType.update({items[i][1]: items[i][0]})
+    for item in _dict_items(dictAttrToVal):
+        dictValToAttr.update({item[1]: item[0]})
+    for item in _dict_items(dictMsgTypeToVal):
+        dictValToMsgType.update({item[1]: item[0]})
 
 
 def gen_tran_id():
@@ -206,9 +202,9 @@ def get_nat_type(s, source_ip, source_port, stun_host=None, stun_port=3478):
         ret = stun_test(s, stun_host, port, source_ip, source_port)
         resp = ret['Resp']
     else:
-        for stun_host in stun_servers_list:
-            log.debug('Trying STUN host: %s', stun_host)
-            ret = stun_test(s, stun_host, port, source_ip, source_port)
+        for host in stun_servers_list:
+            log.debug('Trying STUN host: %s', host)
+            ret = stun_test(s, host, port, source_ip, source_port)
             resp = ret['Resp']
             if resp:
                 break
