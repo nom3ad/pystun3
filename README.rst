@@ -5,7 +5,7 @@
    :target: https://coveralls.io/r/jtriley/pystun
 
 
-PyStun
+PyStun3 is a `PyStun <https://github.com/jtriley/pystun/>`_ fork with Python3 support.
 ======
 A Python STUN client for getting NAT type and external IP
 
