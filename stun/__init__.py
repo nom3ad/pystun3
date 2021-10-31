@@ -202,12 +202,18 @@ def get_nat_type(s, source_ip, source_port, stun_host=None, stun_port=3478):
         ret = stun_test(s, stun_host, port, source_ip, source_port)
         resp = ret['Resp']
     else:
-        for host in stun_servers_list:
+        stun_candidates = list(stun_servers_list)
+        random.shuffle(stun_candidates)
+        for host in stun_candidates:
             log.debug('Trying STUN host: %s', host)
             ret = stun_test(s, host, port, source_ip, source_port)
             resp = ret['Resp']
             if resp:
+                stun_host = host
                 break
+        else:
+            raise Exception("unreachable stun servers")
+
     if not resp:
         return Blocked, ret
     log.debug("Result: %s", ret)
